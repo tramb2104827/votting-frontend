@@ -21,3 +21,29 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+build/
+
+
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build
+build/
+dist/
+
+# Logs
+*.log
+
+# Google / Dialogflow credentials
+src/chatbot/*.json

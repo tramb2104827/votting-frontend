@@ -39,10 +39,11 @@ const ChatContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
   overflow: 'hidden',
   [theme.breakpoints.down('sm')]: {
-    width: 'calc(100vw - 40px)',
-    height: 'calc(100vh - 120px)',
-    bottom: 10,
-    right: 20,
+    width: 'calc(100vw - 24px)',
+    maxWidth: 380,
+    height: 'min(520px, calc(100vh - 88px))',
+    bottom: 12,
+    right: 12,
   }
 }));
 
@@ -73,7 +74,7 @@ const MessageBubble = styled(Box)(({ theme, isUser }) => ({
 }));
 
 const MessageContent = styled(Box)(({ theme, isUser }) => ({
-  maxWidth: isUser ? '150%' : '80%', // Tin nhắn user rộng hơn
+  maxWidth: isUser ? '90%' : '80%',
   padding: theme.spacing(1.5, 2),
   borderRadius: 18,
   background: isUser 

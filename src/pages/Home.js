@@ -56,6 +56,11 @@ const MainContainer = styled(Container)(({ theme }) => ({
   padding: theme.spacing(4),
   marginTop: theme.spacing(4),
   marginBottom: theme.spacing(4),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 // Modern button styling
@@ -75,6 +80,12 @@ const ModernButton = styled(Button)(({ theme }) => ({
     boxShadow: '0 8px 24px rgba(22, 147, 133, 0.4)',
     transform: 'translateY(-2px)',
   },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    padding: '11px 18px',
+    marginBottom: 16,
+    fontSize: '1rem',
+  },
 }));
 
 // Secondary button styling
@@ -93,6 +104,12 @@ const SecondaryButton = styled(Button)(({ theme }) => ({
     background: '#169385',
     color: '#fff',
     transform: 'translateY(-2px)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    padding: '11px 18px',
+    marginBottom: 16,
+    fontSize: '1rem',
   },
 }));
 
@@ -143,7 +160,9 @@ const StepCircle = styled(Box)(({ theme }) => ({
 
 function ElectionSlider({ elections, onClick }) {
   const [index, setIndex] = React.useState(0);
-  const visibleCount = 4;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const visibleCount = isMobile ? 1 : 4;
   
   //Tắt auto-slide để tránh timeout
   React.useEffect(() => {
@@ -151,7 +170,7 @@ function ElectionSlider({ elections, onClick }) {
       setIndex((prev) => (prev + visibleCount) % (elections.length > 0 ? elections.length : 1));
     }, 3000);
     return () => clearInterval(timer);
-  }, [elections.length]);
+  }, [elections.length, visibleCount]);
   
   if (!elections.length) return null;
   
@@ -175,13 +194,15 @@ function ElectionSlider({ elections, onClick }) {
       justifyContent: 'center', 
       alignItems: 'center', 
       position: 'relative', 
-      gap: 3 
+      gap: { xs: 1, sm: 3 },
+      px: { xs: 4, sm: 6 },
+      overflow: 'hidden',
     }}>
       <IconButton 
         onClick={() => setIndex((index - visibleCount + elections.length) % elections.length)} 
         sx={{ 
           position: 'absolute', 
-          left: 0, 
+          left: { xs: 4, sm: 0 }, 
           zIndex: 2, 
           color: '#169385', 
           bgcolor: '#fff', 
@@ -199,8 +220,16 @@ function ElectionSlider({ elections, onClick }) {
       
       <Box sx={{ display: 'flex', gap: 3, width: '100%', justifyContent: 'center' }}>
         {visibleElections.map((election, idx) => (
-          <ElectionCard key={election.id || idx} onClick={() => onClick(election)}>
-            <Box sx={{ position: 'relative', width: 254, height: 180 }}>
+          <ElectionCard
+            key={election.id || idx}
+            onClick={() => onClick(election)}
+            sx={{
+              flex: { xs: '1 1 100%', sm: '1 1 0' },
+              minWidth: { xs: 0, sm: 220 },
+              maxWidth: { xs: '100%', sm: 264 },
+            }}
+          >
+            <Box sx={{ position: 'relative', width: '100%', height: { xs: 170, sm: 180 } }}>
               <Box 
                 component="img" 
                 src={election.logoUrl} 
@@ -360,7 +389,9 @@ const Home = () => {
                 color: '#0f6b5f', 
                 letterSpacing: 2, 
                 textAlign: { xs: 'center', md: 'left' },
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
+                lineHeight: 1.1,
+                wordBreak: 'break-word',
               }}
             >
               HỆ THỐNG BẦU CỬ TRỰC TUYẾN

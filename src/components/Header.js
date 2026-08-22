@@ -240,9 +240,9 @@ function Header() {
           zIndex: 1000,
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ minHeight: 64, px: { xs: 1.5, sm: 3 }, gap: { xs: 0.5, sm: 1 } }}>
           <Typography
-            variant="h4"
+            variant="h5"
             component={RouterLink}
             to="/"
             sx={{
@@ -251,12 +251,15 @@ function Header() {
               color: 'inherit',
               fontWeight: 600,
               fontStyle: 'bold',
+              fontSize: { xs: '1rem', sm: '1.35rem', md: '1.5rem' },
+              lineHeight: 1.2,
+              minWidth: 0,
             }}
           >
             HỆ THỐNG BẦU CỬ
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.25, sm: 1, md: 2 }, minWidth: 0 }}>
             {isLoggedIn && (
               <>
                 {isAdmin ? (
@@ -268,10 +271,11 @@ function Header() {
                     Quản lý
                   </Button>
                 ) : (
-                  <Button
+                    <Button
                     color="inherit"
                     component={RouterLink}
                     to="/elections"
+                      sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
                   >
                     Danh sách bầu cử
                   </Button>
@@ -303,7 +307,7 @@ function Header() {
                   </Avatar>
                 </IconButton>
                 {!isAdmin && (
-                  <Button color="inherit" onClick={handleMenu} sx={{ fontWeight: 600, textTransform: 'none' }}>{userData?.name || 'Cử tri'}</Button>
+                  <Button color="inherit" onClick={handleMenu} sx={{ display: { xs: 'none', sm: 'inline-flex' }, fontWeight: 600, textTransform: 'none', maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData?.name || 'Cử tri'}</Button>
                 )}
                 <Menu
                   anchorEl={anchorEl}

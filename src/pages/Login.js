@@ -112,7 +112,7 @@ function LoginForm() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ fontFamily: 'Roboto, Arial, sans-serif', minHeight: '100vh', minWidth: '100%',
+    <Container maxWidth="sm" sx={{ fontFamily: 'Roboto, Arial, sans-serif', minHeight: '100vh', width: '100%',
       marginTop: 7, 
      display: 'flex', alignItems: 'center', justifyContent: 'center', 
      background: 'linear-gradient(0deg, rgba(0, 85, 75, 0.1) 0%,rgb(255, 255, 255) 100%)' }}>
@@ -149,6 +149,7 @@ function LoginForm() {
               fontWeight: 700,
               color: '#169385',
               mb: 4,
+              fontSize: { xs: '1.8rem', sm: '2.125rem' },
               letterSpacing: 1.2,
               textShadow: '0 2px 8pxrgb(202, 255, 249)'
             }}

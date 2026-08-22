@@ -132,7 +132,7 @@ function RegisterForm() {
 
   return (
     <Container maxWidth="sm" sx={{ fontFamily: 'Roboto, Arial, sans-serif', 
-    minHeight: '100vh',minWidth: '100%', display: 'flex', alignItems: 'center', 
+    minHeight: '100vh', width: '100%', display: 'flex', alignItems: 'center', 
     justifyContent: 'center', 
     marginTop: 7, 
     background: 'linear-gradient(0deg, rgba(0, 131, 116, 0.1) 0%,rgb(255, 255, 255) 100%)' }}>
@@ -176,6 +176,7 @@ function RegisterForm() {
               sx={{
                 color: '#169385',
                 fontWeight: 700,
+                  fontSize: { xs: '1.8rem', sm: '2.125rem' },
                 textAlign: 'center',
                 letterSpacing: 1.2,
                 textShadow: '0 2px 8pxrgb(164, 255, 244)'

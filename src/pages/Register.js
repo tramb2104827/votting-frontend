@@ -27,8 +27,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-const RECAPTCHA_SITE_KEY = '6LcykYsrAAAAAFkUzlKj6ppo4wfNSY7vr0d95Sz_';
-
+const RECAPTCHA_SITE_KEY = '6LcykYsrAAAAAFkUzlKj6ppo4wfNSY7vr0d95Sz_';const RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 function RegisterForm() {
   const navigate = useNavigate();
   const { account } = useWeb3React();

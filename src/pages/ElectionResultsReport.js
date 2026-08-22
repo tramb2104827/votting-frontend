@@ -42,7 +42,7 @@ function ElectionResultsReport() {
           throw new Error('Không tìm thấy ID cuộc bầu cử');
         }
         // Fetch kết quả từ backend
-        const res = await axios.get(`http://localhost:5000/api/elections/${electionId}/results`);
+        const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/elections/${electionId}/results`);
         setResults(res.data);
       } catch (error) {
         console.error('Error loading election results:', error);

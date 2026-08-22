@@ -52,7 +52,7 @@ function ElectionList() {
   const loadElections = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/elections');
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/elections');
       setElections(res.data);
     } catch (error) {
       console.error('Error loading elections:', error);
@@ -64,7 +64,7 @@ function ElectionList() {
 
   const loadCandidates = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/candidates');
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/candidates');
       setCandidates(res.data);
     } catch (error) {
       console.error('Error loading candidates:', error);

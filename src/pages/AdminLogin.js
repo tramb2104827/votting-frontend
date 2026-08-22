@@ -43,7 +43,7 @@ function AdminLogin() {
     setSuccess(false);
     try {
       // Gọi API backend để đăng nhập admin
-      const response = await axios.post('http://localhost:5000/api/admins/login', {
+      const response = await axios.post('https://votting-backend-a9d7.onrender.com/api/admins/login', {
         cccd,
         password
       });

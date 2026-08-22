@@ -340,7 +340,7 @@ function AdminDashboard() {
   const loadElections = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/elections');
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/elections');
       setElections(res.data);
     } catch (error) {
       showSnackbar('Không thể tải danh sách bầu cử', 'error');
@@ -352,7 +352,7 @@ function AdminDashboard() {
   const loadCandidates = async (electionId) => {
     try {
       setLoading(true);
-      let url = 'http://localhost:5000/api/candidates';
+      let url = 'https://votting-backend-a9d7.onrender.com/api/candidates';
       if (electionId) url += `?electionId=${electionId}`;
       const res = await axios.get(url);
       setCandidates(res.data);
@@ -371,7 +371,7 @@ function AdminDashboard() {
     try {
       setLoading(true);
       const jwt = localStorage.getItem('jwt');
-      const res = await axios.get('http://localhost:5000/api/voters', {
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/voters', {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       setVoters(res.data);
@@ -411,7 +411,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.post('http://localhost:5000/api/elections', {
+      await axios.post('https://votting-backend-a9d7.onrender.com/api/elections', {
         title,
         description,
         startTime,
@@ -453,7 +453,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.delete(`http://localhost:5000/api/elections/${idStr}`, {
+      await axios.delete(`https://votting-backend-a9d7.onrender.com/api/elections/${idStr}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       await loadElections(); // Luôn gọi lại API để cập nhật state
@@ -481,7 +481,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.post('http://localhost:5000/api/candidates', {
+      await axios.post('https://votting-backend-a9d7.onrender.com/api/candidates', {
         name,
         birthDate: birthDate ? birthDate.toISOString() : null,
         hometown,
@@ -529,7 +529,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.put(`http://localhost:5000/api/candidates/${selectedCandidate._id || selectedCandidate.id}`, {
+      await axios.put(`https://votting-backend-a9d7.onrender.com/api/candidates/${selectedCandidate._id || selectedCandidate.id}`, {
         name,
         birthDate: birthDate ? (typeof birthDate === 'string' ? birthDate : birthDate.toISOString()) : null,
         hometown,
@@ -575,7 +575,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.delete(`http://localhost:5000/api/candidates/${candidateId}`, {
+      await axios.delete(`https://votting-backend-a9d7.onrender.com/api/candidates/${candidateId}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       await loadCandidates(selectedElection); // Luôn gọi lại API để cập nhật state
@@ -600,7 +600,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.delete(`http://localhost:5000/api/voters/${cccd}`, {
+      await axios.delete(`https://votting-backend-a9d7.onrender.com/api/voters/${cccd}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       await loadVoters();
@@ -625,7 +625,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.patch(`http://localhost:5000/api/voters/${String(cccd)}/lock`, {
+      await axios.patch(`https://votting-backend-a9d7.onrender.com/api/voters/${String(cccd)}/lock`, {
         isActive: !currentActive
       }, {
         headers: { Authorization: `Bearer ${jwt}` }
@@ -685,7 +685,7 @@ function AdminDashboard() {
       setLoading(true);
       try {
         const jwt = localStorage.getItem('jwt');
-        await axios.post('http://localhost:5000/api/elections', {
+        await axios.post('https://votting-backend-a9d7.onrender.com/api/elections', {
           title,
           description,
           startTime,
@@ -923,7 +923,7 @@ function AdminDashboard() {
   const loadAdmins = async () => {
     try {
       const jwt = localStorage.getItem('jwt');
-      const res = await axios.get('http://localhost:5000/api/admins', {
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/admins', {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       setAdmins(res.data);
@@ -958,7 +958,7 @@ function AdminDashboard() {
       }
       // Gửi API tạo admin
       const jwt = localStorage.getItem('jwt');
-      await axios.post('http://localhost:5000/api/admins', {
+      await axios.post('https://votting-backend-a9d7.onrender.com/api/admins', {
         cccd: adminFormData.cccd,
         name: adminFormData.name,
         email: adminFormData.email,
@@ -990,7 +990,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.delete(`http://localhost:5000/api/admins/${adminId}`, {
+      await axios.delete(`https://votting-backend-a9d7.onrender.com/api/admins/${adminId}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       await loadAdmins();
@@ -1020,7 +1020,7 @@ function AdminDashboard() {
     
     // Filter candidates trên state (KHÔNG lấy từ localStorage)
     try {
-      const res = await axios.get(`http://localhost:5000/api/candidates?electionId=${electionIdStr}`);
+      const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/candidates?electionId=${electionIdStr}`);
       setFilteredCandidates(res.data);
       console.log(`Loaded ${res.data.length} candidates from backend for election ${electionIdStr}`);
     } catch (error) {
@@ -1908,7 +1908,7 @@ function AdminDashboard() {
       }
       // Gọi API backend để cập nhật trạng thái completed
       const jwt = localStorage.getItem('jwt');
-      await axios.put(`http://localhost:5000/api/elections/${electionId}/complete`, {}, {
+      await axios.put(`https://votting-backend-a9d7.onrender.com/api/elections/${electionId}/complete`, {}, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       await loadElections();
@@ -2024,7 +2024,7 @@ function AdminDashboard() {
         return;
       }
       const jwt = localStorage.getItem('jwt');
-      await axios.put(`http://localhost:5000/api/elections/${_id || id}`, {
+      await axios.put(`https://votting-backend-a9d7.onrender.com/api/elections/${_id || id}`, {
         title,
         description,
         startTime,
@@ -2076,7 +2076,7 @@ function AdminDashboard() {
     try {
       const jwt = localStorage.getItem('jwt');
       for (const c of importedCandidates) {
-        await axios.post('http://localhost:5000/api/candidates', {
+        await axios.post('https://votting-backend-a9d7.onrender.com/api/candidates', {
           name: c.name || c["Tên"],
           birthDate: c.birthDate ? new Date(c.birthDate).toISOString() : (c["Ngày sinh"] ? new Date(c["Ngày sinh"]).toISOString() : null),
           hometown: c.hometown || c["Quê quán"],
@@ -2103,7 +2103,7 @@ function AdminDashboard() {
   const loadVotes = async () => {
     try {
       const jwt = localStorage.getItem('jwt');
-      const res = await axios.get('http://localhost:5000/api/votes', {
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/votes', {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       setVotes(res.data);
@@ -2117,7 +2117,7 @@ function AdminDashboard() {
 
   const loadAllCandidates = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/candidates');
+      const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/candidates');
       setAllCandidates(res.data);
     } catch (error) {
       setAllCandidates([]);
@@ -2210,7 +2210,7 @@ function AdminDashboard() {
         try {
           setLoading(true);
           const jwt = localStorage.getItem('jwt');
-          const res = await axios.get('http://localhost:5000/api/votes', {
+          const res = await axios.get('https://votting-backend-a9d7.onrender.com/api/votes', {
             headers: { Authorization: `Bearer ${jwt}` }
           });
           setAllVotes(res.data);

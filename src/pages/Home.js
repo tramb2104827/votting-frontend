@@ -269,7 +269,7 @@ const Home = () => {
   const [ongoingElections, setOngoingElections] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get('http://localhost:5000/api/elections')
+    axios.get('https://votting-backend-a9d7.onrender.com/api/elections')
       .then(res => {
         const now = new Date();
         const activeElections = (res.data || []).filter(e => {

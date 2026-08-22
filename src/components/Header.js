@@ -173,7 +173,7 @@ function Header() {
       
       console.log('Sending update request:', requestData);
       
-      const res = await axios.put('http://localhost:5000/api/voters/me', requestData, {
+      const res = await axios.put('https://votting-backend-a9d7.onrender.com/api/voters/me', requestData, {
         headers: { 
           'Authorization': `Bearer ${jwt}`,
           'Content-Type': 'application/json'

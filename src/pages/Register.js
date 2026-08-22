@@ -81,7 +81,7 @@ function RegisterForm() {
       // Lấy token reCAPTCHA v3
       const recaptchaToken = await executeRecaptcha('register');
       // Gọi API backend để đăng ký
-      const response = await fetch('http://localhost:5000/api/voters/register', {
+      const response = await fetch('https://votting-backend-a9d7.onrender.com/api/voters/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

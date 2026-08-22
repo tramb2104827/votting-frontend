@@ -260,7 +260,7 @@ function ElectionDetail() {
     if (!id) return;
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/elections/${id}`);
+      const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/elections/${id}`);
       setElection(res.data);
     } catch (err) {
       setError('Không thể tải dữ liệu cuộc bầu cử');
@@ -279,7 +279,7 @@ function ElectionDetail() {
       return;
     }
     try {
-      const res = await axios.get(`http://localhost:5000/api/candidates?electionId=${electionId}`);
+      const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/candidates?electionId=${electionId}`);
       setCandidates(res.data);
     } catch (error) {
       setError('Không thể tải dữ liệu ứng cử viên');
@@ -290,7 +290,7 @@ function ElectionDetail() {
   const loadElectionResult = async () => {
     if (!id) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/elections/${id}/results`);
+      const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/elections/${id}/results`);
       setElectionResult(res.data);
     } catch (err) {
       setElectionResult(null);
@@ -980,7 +980,7 @@ function ElectionDetail() {
                   setOpenLoginDialog(true);
                   return;
                 }
-                await axios.post('http://localhost:5000/api/votes', {
+                await axios.post('https://votting-backend-a9d7.onrender.com/api/votes', {
                   electionId: election._id || id,
                   candidateId: selectedCandidate,
                   cccd,

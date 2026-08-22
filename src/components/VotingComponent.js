@@ -219,7 +219,7 @@ function VotingComponent({
       const electionObjectId = typeof electionId === 'object' && electionId._id ? electionId._id : electionId;
       if (!jwt || !electionObjectId) return setHasVoted(false);
       try {
-        const res = await axios.get(`http://localhost:5000/api/votes/mine?electionId=${electionObjectId}`, {
+        const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/votes/mine?electionId=${electionObjectId}`, {
           headers: { Authorization: `Bearer ${jwt}` }
         });
         setHasVoted(res.data && res.data.length > 0);
@@ -236,7 +236,7 @@ function VotingComponent({
       // Lấy _id (ObjectId) nếu electionId là object
       const electionObjectId = typeof electionId === 'object' && electionId._id ? electionId._id : electionId;
       try {
-        const res = await axios.get(`http://localhost:5000/api/candidates?electionId=${electionObjectId}`);
+        const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/candidates?electionId=${electionObjectId}`);
         setCandidates(res.data);
       } catch (error) {
         console.error('Error loading candidates:', error);
@@ -287,7 +287,7 @@ function VotingComponent({
       }
       const jwt = localStorage.getItem('jwt');
       const electionObjectId = typeof electionId === 'object' && electionId._id ? electionId._id : electionId;
-      const checkRes = await axios.get(`http://localhost:5000/api/votes/mine?electionId=${electionObjectId}`, {
+      const checkRes = await axios.get(`https://votting-backend-a9d7.onrender.com/api/votes/mine?electionId=${electionObjectId}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       if (checkRes.data && checkRes.data.length > 0) {
@@ -321,7 +321,7 @@ function VotingComponent({
       const voteHash = createVoteHash(electionId, selectedCandidates, cccd, account);
       const tx = await contract.submitVote(onChainElectionId, onChainCandidateIds, voteHash);
       const receipt = await tx.wait();
-      await axios.post('http://localhost:5000/api/votes', {
+      await axios.post('https://votting-backend-a9d7.onrender.com/api/votes', {
         electionId: electionObjectId, // _id (ObjectId)
         candidateIds: selectedCandidates, // mảng _id (ObjectId)
         voteHash: voteHash, // thêm voteHash
@@ -391,7 +391,7 @@ function VotingComponent({
         setError('Không xác định được electionId hợp lệ để lấy thông tin.');
         return;
       }
-      const res = await axios.get(`http://localhost:5000/api/votes/receipt?electionId=${objectId}`, {
+      const res = await axios.get(`https://votting-backend-a9d7.onrender.com/api/votes/receipt?electionId=${objectId}`, {
         headers: { Authorization: `Bearer ${jwt}` }
       });
       if (res.data) {

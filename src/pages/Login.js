@@ -62,7 +62,7 @@ function LoginForm() {
       let data;
       let response;
       try {
-        response = await fetch('http://localhost:5000/api/voters/login', {
+        response = await fetch('https://votting-backend-a9d7.onrender.com/api/voters/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -19,9 +19,6 @@ import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import { useWeb3React } from '@web3-react/core';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-
-const RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -34,7 +31,6 @@ function LoginForm() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   // Xử lý đăng nhập
   const handleLogin = async (e) => {
@@ -47,18 +43,6 @@ function LoginForm() {
         setLoading(false);
         return;
       }
-      if (!executeRecaptcha) {
-        setError('Không thể xác thực reCAPTCHA. Vui lòng thử lại sau.');
-        setLoading(false);
-        return;
-      }
-      const recaptchaToken = await executeRecaptcha('login');
-      console.log('reCAPTCHA token:', recaptchaToken);
-      if (!recaptchaToken) {
-        setError('Không lấy được mã xác thực reCAPTCHA. Vui lòng thử lại.');
-        setLoading(false);
-        return;
-      }
       let data;
       let response;
       try {
@@ -68,7 +52,6 @@ function LoginForm() {
           body: JSON.stringify({
             cccd: formData.cccd,
             password: formData.password,
-            recaptchaToken,
           }),
         });
         try {
@@ -253,10 +236,4 @@ function LoginForm() {
   );
 }
 
-export default function Login() {
-  return (
-    <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY} language="vi">
-      <LoginForm />
-    </GoogleReCaptchaProvider>
-  );
-} 
+export default LoginForm;

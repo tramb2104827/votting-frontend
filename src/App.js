@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -143,14 +143,12 @@ const theme = createTheme({
 // Route guard for admin routes
 const AdminRoute = ({ children }) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
-  console.log('AdminRoute check:', isAdmin);
   return isAdmin ? children : <Navigate to="/admin" />;
 };
 
 // Route guard for voter routes
 const VoterRoute = ({ children }) => {
   const isVoter = localStorage.getItem('isVoter') === 'true';
-  console.log('VoterRoute check:', isVoter);
   return isVoter ? children : <Navigate to="/login" />;
 };
 
@@ -218,22 +216,18 @@ function AppWithFooterControl() {
         }
 
 function App() {
-  // Check for existing login on app start
-  useEffect(() => {
-    const voterCCCD = localStorage.getItem('voterCCCD');
-    const adminCCCD = localStorage.getItem('adminCCCD');
-    
-    console.log('App init - voter login:', !!voterCCCD);
-    console.log('App init - admin login:', !!adminCCCD);
-  }, []);
-
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ContextProvider>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
             <CssBaseline />
-            <Router>
+            <Router
+              future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+              }}
+            >
               <AppWithFooterControl />
             </Router>
           </LocalizationProvider>

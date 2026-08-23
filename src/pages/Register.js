@@ -25,9 +25,7 @@ import { useWeb3React } from '@web3-react/core';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-const RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 function RegisterForm() {
   const navigate = useNavigate();
   const { account } = useWeb3React();
@@ -44,8 +42,6 @@ function RegisterForm() {
     password: '',
     confirmPassword: '',
   });
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -72,13 +68,6 @@ function RegisterForm() {
         setLoading(false);
         return;
       }
-      if (!executeRecaptcha) {
-        setError('Không thể xác thực reCAPTCHA. Vui lòng thử lại sau.');
-        setLoading(false);
-        return;
-      }
-      // Lấy token reCAPTCHA v3
-      const recaptchaToken = await executeRecaptcha('register');
       // Gọi API backend để đăng ký
       const response = await fetch('https://votting-backend-a9d7.onrender.com/api/voters/register', {
         method: 'POST',
@@ -90,7 +79,6 @@ function RegisterForm() {
           birthDate: formData.birthDate,
           password: formData.password,
           walletAddress: account || null,
-          recaptchaToken,
         }),
       });
       const data = await response.json();
@@ -421,10 +409,4 @@ function RegisterForm() {
   );
 }
 
-export default function Register() {
-  return (
-    <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY} language="vi">
-      <RegisterForm />
-    </GoogleReCaptchaProvider>
-  );
-}
+export default RegisterForm;

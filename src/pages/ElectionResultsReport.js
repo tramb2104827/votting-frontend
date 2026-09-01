@@ -24,6 +24,7 @@ import {
   Info as InfoIcon
 } from '@mui/icons-material';
 import axios from 'axios';
+import { sanitizeImageUrl } from '../utils/imageFallback';
 
 function ElectionResultsReport() {
   const { id } = useParams();
@@ -275,7 +276,7 @@ function ElectionResultsReport() {
                 <Card sx={{ display: 'flex', alignItems: 'center', p: 3, borderRadius: 4, boxShadow: 3, bgcolor: '#fff', mb: 2 }}>
                   <Box
                     component="img"
-                    src={item.candidate.imageUrl || 'https://via.placeholder.com/240x320?text=No+Image'}
+                    src={sanitizeImageUrl(item.candidate.imageUrl, 'candidate')}
                     alt={item.candidate.name}
                     sx={{
                       width: 180,

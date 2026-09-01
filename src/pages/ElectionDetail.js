@@ -45,6 +45,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import axios from 'axios';
 import { differenceInSeconds } from 'date-fns';
 import SecurityIcon from '@mui/icons-material/Security';
+import { sanitizeImageUrl } from '../utils/imageFallback';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import SpeedIcon from '@mui/icons-material/Speed';
 
@@ -717,7 +718,7 @@ function ElectionDetail() {
                     <CandidateCard>
                       <CandidateImage className="candidate-image">
                         <img
-                          src={candidate.imageUrl || 'https://via.placeholder.com/400x500?text=No+Image'}
+                          src={sanitizeImageUrl(candidate.imageUrl, 'candidate')}
                           alt={candidate.name}
                           style={{ 
                             width: '100%', 
@@ -812,7 +813,7 @@ function ElectionDetail() {
                     <CandidateCard>
                       <CandidateImage className="candidate-image">
                         <img
-                          src={candidate.imageUrl || 'https://via.placeholder.com/400x500?text=Ứng+cử+viên'}
+                          src={sanitizeImageUrl(candidate.imageUrl, 'candidate')}
                           alt={candidate.name}
                           style={{ 
                             width: '100%', 

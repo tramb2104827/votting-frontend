@@ -172,7 +172,7 @@ function ElectionDetail() {
                       <TableCell>
                         <Box
                           component="img"
-                          src={candidate.imageUrl || 'https://via.placeholder.com/80x80?text=?'}
+                          src={sanitizeImageUrl(candidate.imageUrl, 'candidate')}
                           alt={candidate.name}
                           sx={{
                             width: 80,

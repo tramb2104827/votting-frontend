@@ -53,6 +53,7 @@ import contractConfig from '../utils/contractConfig';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { formatDate } from '../utils/helpers';
 import { getElectionStatus } from '../utils/electionHelpers';
+import { sanitizeImageUrl } from '../utils/imageFallback';
 
 function VoterDashboard() {
   const { account, library, active } = useWeb3React();
@@ -167,7 +168,7 @@ function VoterDashboard() {
             description: election.description,
             startTime: new Date(election.startTime * 1000),
             endTime: new Date(election.endTime * 1000),
-            logoUrl: election.logoUrl || 'https://via.placeholder.com/150',
+            logoUrl: sanitizeImageUrl(election.logoUrl, 'election'),
             isCompleted: election.isCompleted,
             isVoted: await contract.hasVoted(account, i),
           });
@@ -620,7 +621,7 @@ function VoterDashboard() {
                       <CardMedia
                         component="img"
                         height="160"
-                        image={candidate.imageUrl || '/candidate-placeholder.png'}
+                        image={sanitizeImageUrl(candidate.imageUrl, 'candidate')}
                         alt={candidate.name}
                         sx={{ objectFit: 'cover' }}
                       />

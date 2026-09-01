@@ -32,8 +32,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import axios from 'axios';
-// Thay đổi đường dẫn ảnh mặc định thành URL trực tiếp
-const defaultElectionImage = 'https://i.imgur.com/D2lDXPB.jpg';
+import { sanitizeImageUrl } from '../utils/imageFallback';
+const defaultElectionImage = sanitizeImageUrl('', 'election');
 
 function ElectionList() {
   const navigate = useNavigate();
@@ -172,7 +172,7 @@ function ElectionList() {
                   <Box sx={{ width: '100%', position: 'relative', pt: '56.25%', borderTopLeftRadius: 20, borderTopRightRadius: 20, overflow: 'hidden' }}>
                     <CardMedia
                       component="img"
-                      image={election.logoUrl || defaultElectionImage}
+                      image={sanitizeImageUrl(election.logoUrl || defaultElectionImage, 'election')}
                       alt={election.title}
                       sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
                     />

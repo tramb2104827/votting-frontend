@@ -73,6 +73,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Line } from 'react-chartjs-2';
+import { sanitizeImageUrl } from '../utils/imageFallback';
 import 'chart.js/auto';
 import { format, getISOWeek, getYear } from 'date-fns';
 import PeopleIcon from '@mui/icons-material/People';
@@ -1652,7 +1653,7 @@ function AdminDashboard() {
                     <TableCell>
                       <Box
                         component="img"
-                        src={candidate && candidate.imageUrl ? candidate.imageUrl : 'https://via.placeholder.com/100x100?text=?'}
+                        src={sanitizeImageUrl(candidate?.imageUrl, 'candidate')}
                         alt={candidate ? candidate.name : 'Ứng cử viên'}
                         sx={{
                           width: 100,
@@ -2049,23 +2050,43 @@ function AdminDashboard() {
   // Hàm xử lý file excel
   const handleExcelFile = (e) => {
     setImportError('');
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
+
+    const validExtensions = ['.xlsx', '.xls', '.csv'];
+    const fileName = file.name || '';
+    const isValidType = validExtensions.some(ext => fileName.toLowerCase().endsWith(ext)) ||
+      ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'text/csv'].includes(file.type);
+
+    if (!isValidType) {
+      setImportError('File không hợp lệ. Vui lòng chọn file Excel (.xlsx, .xls) hoặc CSV.');
+      setImportedCandidates([]);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (evt) => {
       try {
-        const bstr = evt.target.result;
-        const wb = XLSX.read(bstr, { type: 'binary' });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        const data = XLSX.utils.sheet_to_json(ws, { defval: '' });
-        setImportedCandidates(data);
+        const data = evt.target.result;
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const parsed = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+        if (!parsed || parsed.length === 0) {
+          setImportError('File Excel không có dữ liệu hoặc định dạng không đúng.');
+          setImportedCandidates([]);
+          return;
+        }
+
+        setImportedCandidates(parsed);
       } catch (err) {
+        console.error('Excel parse error:', err);
         setImportError('File không hợp lệ hoặc sai định dạng!');
         setImportedCandidates([]);
       }
     };
-    reader.readAsBinaryString(file);
+    reader.readAsArrayBuffer(file);
   };
 
   // Hàm import lên backend
@@ -2566,7 +2587,7 @@ function AdminDashboard() {
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Avatar
-                  src={selectedCandidate.imageUrl || 'https://via.placeholder.com/100x100?text=?'}
+                  src={sanitizeImageUrl(selectedCandidate?.imageUrl, 'candidate')}
                   alt={selectedCandidate.name}
                   sx={{ width: 100, height: 100, mr: 2 }}
                 />
@@ -2601,7 +2622,7 @@ function AdminDashboard() {
           </Typography>
           <input
             type="file"
-            accept=".xlsx"
+            accept=".xlsx,.xls,.csv"
             onChange={handleExcelFile}
             style={{ marginTop: '10px' }}
           />
@@ -2630,7 +2651,7 @@ function AdminDashboard() {
             loading={importLoading}
             onClick={handleImportCandidates}
               variant="contained"
-            disabled={importedCandidates.length === 0 || importError}
+            disabled={Boolean(importedCandidates.length === 0 || importError)}
             >
             Import
             </LoadingButton>

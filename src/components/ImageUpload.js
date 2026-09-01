@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
-  TextField,
   Typography,
   CircularProgress,
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { sanitizeImageUrl } from '../utils/imageFallback';
 
 function ImageUpload({ label, value, onChange }) {
   const [loading, setLoading] = useState(false);
@@ -133,7 +133,7 @@ function ImageUpload({ label, value, onChange }) {
         >
           <Box
             component="img"
-            src={value || 'https://via.placeholder.com/200x267?text=Chọn+ảnh'}
+            src={sanitizeImageUrl(value, 'candidate')}
             alt="Preview"
             sx={{
               position: 'absolute',
